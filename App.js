@@ -8,10 +8,12 @@ import TaskListScreen from './screens/TaskListScreen';
 const Stack = createStackNavigator();
 
 function HomeScreen({ navigation, tasks, setTasks }) {
+  // State for managing new task input
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Function to add a new task
   const handleAddTask = () => {
     if (taskTitle.trim() !== '') {
       const newTask = {
@@ -28,12 +30,14 @@ function HomeScreen({ navigation, tasks, setTasks }) {
     }
   }
 
+  // Function to toggle task completion status
   const toggleTaskCompletion = (id) => {
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
   }
 
+  // Function to delete a task
   const deleteTask = (id) => {
     setTasks(tasks.filter(task => task.id !== id));
   }
@@ -48,6 +52,7 @@ function HomeScreen({ navigation, tasks, setTasks }) {
       >
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Today's tasks</Text>
+          {/* List of tasks */}
           <View style={styles.items}>
             {
               tasks.map((item) => (
@@ -63,12 +68,14 @@ function HomeScreen({ navigation, tasks, setTasks }) {
               ))
             }
           </View>
+          {/* Button to view all tasks */}
           <TouchableOpacity style={styles.viewTasksButton} onPress={() => navigation.navigate('TaskList')}>
             <Text style={styles.viewTasksButtonText}>View All Tasks</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
+      {/* Button to add a new task */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
@@ -78,6 +85,7 @@ function HomeScreen({ navigation, tasks, setTasks }) {
         </TouchableOpacity>
       </KeyboardAvoidingView>
 
+      {/* Modal for adding a new task */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -110,7 +118,9 @@ function HomeScreen({ navigation, tasks, setTasks }) {
   );
 }
 
+// Main App component
 export default function App() {
+  // State for managing tasks
   const [tasks, setTasks] = useState([]);
 
   return (
@@ -127,6 +137,7 @@ export default function App() {
   );
 }
 
+// Styles for the components
 const styles = StyleSheet.create({
   container: {
     flex: 1,

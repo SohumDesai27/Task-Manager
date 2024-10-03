@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import Task from '../components/Task';
 
 const TaskListScreen = ({ tasks }) => {
+  // State to toggle between completed and incomplete tasks
   const [showCompleted, setShowCompleted] = useState(false);
 
+  // Filter tasks based on their completion status
   const filteredTasks = tasks.filter(task => task.completed === showCompleted);
 
   return (
     <View style={styles.container}>
+      {/* Header with toggle buttons for completed/incomplete tasks */}
       <View style={styles.header}>
         <TouchableOpacity
           style={[styles.headerButton, !showCompleted && styles.activeButton]}
@@ -23,6 +26,8 @@ const TaskListScreen = ({ tasks }) => {
           <Text style={styles.headerButtonText}>Completed</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Scrollable list of tasks */}
       <ScrollView contentContainerStyle={styles.tasksWrapper}>
         {filteredTasks.map((task, index) => (
           <Task
@@ -30,10 +35,11 @@ const TaskListScreen = ({ tasks }) => {
             title={task.title}
             description={task.description}
             completed={task.completed}
-            onToggle={() => {}}
-            onDelete={() => {}}
+            onToggle={() => {}}  // These are placeholder functions
+            onDelete={() => {}}  // You might want to implement these
           />
         ))}
+        {/* Display a message when there are no tasks */}
         {filteredTasks.length === 0 && (
           <Text style={styles.noTasksText}>
             No {showCompleted ? 'completed' : 'incomplete'} tasks
@@ -44,6 +50,7 @@ const TaskListScreen = ({ tasks }) => {
   );
 };
 
+// Styles for the components
 const styles = StyleSheet.create({
   container: {
     flex: 1,
